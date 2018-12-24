@@ -18,9 +18,9 @@ class Driver {
   }
 
   passengers() {
-    return store.passengers.filter(passenger => {
-      return passenger.driverId === this.id;
-    });
+     return this.trips().map(trip => {
+       return trip.passenger();
+     });
   }
 }
 
@@ -45,22 +45,20 @@ class Passenger {
 }
 
 class Trip {
-constructor(driver, passenger) {
-  this.driverId = driver.id;
-  this.passengerId = passenger.id;
-  this.id = tripId++;
-  store.trips.push(this);
-}
-
-driver() {
-  return store.drivers.find(driver => {
-    return driver.id === this.driverId;
-  });
-}
-
-passenger() {
-  return store.passengers.find(passenger => {
-    return passenger.id === this.passengerId;
-  });
-}
+  constructor(driver, passenger) {
+    this.driverId = driver.id;
+    this.passengerId = passenger.id;
+    this.id = tripId++;
+    store.trips.push(this);
+  }
+  driver() {
+    return store.drivers.find(driver => {
+      return driver.id === this.driverId;
+    });
+  }
+  passenger() {
+    return store.passengers.find(passenger => {
+      return passenger.id === this.passengerId;
+    });
+  }
 }
